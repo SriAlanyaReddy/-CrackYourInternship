@@ -1,24 +1,22 @@
 class Solution {
     public int uniquePaths(int m, int n) {
-        int dp[][]=new int[m][n];
-\t for (int i = 0; i < m; i++) {
-            Arrays.fill(dp[i], -1);
-        }
-\treturn f(m-1,n-1,dp);
+    int dp[][]=new int[m][n];
+\tfor (int i = 0; i < m; i++) {
+        dp[i][0] = 1;
     }
-    public static int f(int i,int j,int[][] dp){
-        if(i==0 && j==0){
-\t\t\treturn 1;
+    for (int j = 0; j < n; j++) {
+        dp[0][j] = 1;
+    }
+
+\t//The first row and the first column are set to 1 because there's only one way to reach any cell in these locations: by moving right or down from the start.
+
+\tfor(int i=1;i<m;i++){
+\t\tfor(int j=1;j<n;j++){
+\t\t\tdp[i][j]=dp[i-1][j]+dp[i][j-1];
 \t\t}
-\t\tif(i<0 || j<0){
-\t\t\treturn 0;
-\t\t}
-\t\tif(dp[i][j]!=-1){
-\t\t\treturn dp[i][j];
-\t\t}
-\t\tint up=f(i-1,j,dp);
-\t\tint left=f(i,j-1,dp);
-\t\treturn dp[i][j]=left+up;
-}// Write your code here.
+\t}
+\treturn dp[m-1][n-1];
+    }
+   
 \t
 }
