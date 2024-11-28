@@ -1,0 +1,51 @@
+/*Possible paths between 2 vertices
+Difficulty: MediumAccuracy: 56.57%Submissions: 30K+Points: 4
+Given a Directed Graph having V nodes numbered from 0 to V-1, and E directed edges. Given two nodes, source and destination, count the number of ways or paths between these two vertices in the directed graph. These paths should not contain any cycle.
+Note: Graph doesn't contain multiple edges, self-loop, and cycles.
+
+
+Example 1:
+
+Input:
+V = 5, E = 7
+Adj = [{1,2,4}, {3,4}, {4}, {2}, {}]
+source = 0 
+destination = 4
+
+Output: 4
+Explanation: */
+
+
+class Solution {
+    // Function to count paths between two vertices in a directed graph.
+    private int count = 0;
+
+    public int countPaths(int V, ArrayList<ArrayList<Integer>> adj, int source, int destination) {
+        boolean[] visited = new boolean[V]; // Array to track visited nodes
+        dfs(adj, visited, source, destination); // Start DFS from the source node
+        return count;
+    }
+
+    private void dfs(ArrayList<ArrayList<Integer>> adj, boolean[] visited, int current, int destination) {
+        // If the current node is the destination, increment the count
+        if (current == destination) {
+            count++;
+            return;
+        }
+
+        // Mark the current node as visited
+        visited[current] = true;
+
+        // Explore all adjacent nodes
+        for (int adjNode : adj.get(current)) {
+            if (!visited[adjNode]) {
+                dfs(adj, visited, adjNode, destination);
+            }
+        }
+
+        // Backtrack by unmarking the current node as visited
+        visited[current] = false;
+    }
+
+   
+}
